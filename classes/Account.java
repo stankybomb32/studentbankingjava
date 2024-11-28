@@ -1,12 +1,13 @@
 package classes;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Account {
     private String name;
     private String passHash;
     private double balance;
-    LinkedList<TransactionEvent> TranHis;
+    LinkedList<TransactionEvent> tranHis;
 
     Account(String name, String password, double balance ){
         this.name = name;
@@ -31,15 +32,18 @@ public class Account {
     }
 
     void deposit(double amount){
-        // To be added later
+        this.balance += amount;
+        tranHis.add(new TransactionEvent("deposit",amount,"bank"));
     }
 
     void withdraw(double amount){
-        // To be added later
+        this.balance -= amount;
+        tranHis.add(new TransactionEvent("withdraw",amount,"bank"));
     }
 
-    void transfer(String platform, double amount){
-        // To be added later
+    void transferOut(String platform, double amount){
+        this.balance -= amount;
+        tranHis.add(new TransactionEvent("transfer",amount,platform));
     }
 
     boolean checkPass(String pass){
