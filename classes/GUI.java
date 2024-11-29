@@ -42,4 +42,27 @@ public class GUI {
             }
         });
     }
+
+    public static void displayAccount(Account account){
+        JFrame frame = new JFrame(account.getName() + "'s Account");
+        frame.setLayout(new BorderLayout());
+        JPanel infoPanel = new JPanel(new FlowLayout());
+        JPanel buttonPanel = new JPanel(new GridLayout(3,1));
+        JLabel balanceLabel = new JLabel("Balance: "+String.valueOf(account.getBalance()));
+
+        JButton depositButton = new JButton("Deposit");
+        JButton withdrawButton = new JButton("Withdraw");
+        JButton transferButton = new JButton("Transfer");
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(infoPanel, BorderLayout.NORTH);
+        frame.add(buttonPanel, BorderLayout.CENTER);
+        infoPanel.add(balanceLabel);
+        buttonPanel.add(depositButton);
+        buttonPanel.add(withdrawButton);
+        buttonPanel.add(transferButton);
+        frame.setSize(350,400);
+
+        frame.setVisible(true);
+    }
 }
