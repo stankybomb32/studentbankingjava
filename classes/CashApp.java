@@ -4,7 +4,11 @@ public abstract class CashApp {
     protected String name;
     protected String mobileNo;
 
-    abstract void transferIn();
+    CashApp(String name, String mobileNo){
+        this.name = name;
+        this.mobileNo = mobileNo;
+    }
+    abstract void transferIn(double amount);
 
     public String getName() {
         return name;
