@@ -7,6 +7,16 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class GUI {
+
+    public static Account login(ArrayList<Account> accounts,String name, String pass) throws NullPointerException{
+        for (Account account: accounts){
+            if((account.getName()).equals(name) && account.checkPass(pass)){ //Replace with hashing
+                return account;
+            }
+        }
+        throw new NullPointerException();
+
+    }
     public static void displayLogin(ArrayList<Account> accounts){
         JFrame frame = new JFrame("Login Screen");
         JPanel panel = new JPanel(new FlowLayout());
@@ -38,7 +48,24 @@ public class GUI {
         loginButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose(); //Logic to be added later
+                try{
+                    Account account = GUI.login(accounts, userText.getText(), passField.getText());
+                    GUI.displayAccount(account);
+                    frame.dispose(); //Logic to be added later
+                }
+                catch(Exception e1){
+                    Dialog warning = new Dialog(frame,"Invalid Credentials!", false);
+                    warning.setSize(300,150);
+                    Button closeButton = new Button("Close");
+                    closeButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            warning.setVisible(false);  // Hides the dialog
+                        }
+                    });
+                    warning.add(closeButton);
+                    warning.setVisible(true);
+                }
             }
         });
     }
@@ -53,6 +80,14 @@ public class GUI {
         JButton depositButton = new JButton("Deposit");
         JButton withdrawButton = new JButton("Withdraw");
         JButton transferButton = new JButton("Transfer");
+        JButton logoutButton = new JButton("Log Out");
+
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(infoPanel, BorderLayout.NORTH);
@@ -61,8 +96,17 @@ public class GUI {
         buttonPanel.add(depositButton);
         buttonPanel.add(withdrawButton);
         buttonPanel.add(transferButton);
+        buttonPanel.add(logoutButton);
         frame.setSize(350,400);
 
         frame.setVisible(true);
     }
+
+    /*
+    void static CashApp displayTransferWindow(Account account){
+        String mobileNo;
+        String name;
+    }
+     */
+
 }
