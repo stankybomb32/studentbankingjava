@@ -80,7 +80,23 @@ public class GUI {
         JButton depositButton = new JButton("Deposit");
         JButton withdrawButton = new JButton("Withdraw");
         JButton transferButton = new JButton("Transfer");
+        JButton tranHisButton = new JButton("View Transaction History");
         JButton logoutButton = new JButton("Log Out");
+
+        depositButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayDeposit(frame,balanceLabel,account);
+            }
+        });
+
+        withdrawButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayWithdraw(frame,balanceLabel,account);
+
+            }
+        });
 
         logoutButton.addActionListener(new ActionListener() {
             @Override
@@ -96,10 +112,60 @@ public class GUI {
         buttonPanel.add(depositButton);
         buttonPanel.add(withdrawButton);
         buttonPanel.add(transferButton);
+        buttonPanel.add(tranHisButton);
         buttonPanel.add(logoutButton);
         frame.setSize(350,400);
 
         frame.setVisible(true);
+    }
+
+    public static void displayWithdraw(JFrame frame, JLabel balanceLabel, Account account) {
+        JDialog withdraw = new JDialog(frame, "Enter withdraw amount");
+        withdraw.setSize(300, 150);
+        JButton confirmButton = new JButton("Confirm");
+        JLabel actionLabel = new JLabel("Enter Amount:");
+        JTextField amountField = new JTextField(20);
+
+        withdraw.add(actionLabel, BorderLayout.NORTH);
+        withdraw.add(amountField, BorderLayout.CENTER);
+        withdraw.add(confirmButton, BorderLayout.SOUTH);
+
+        withdraw.setVisible(true);
+        confirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double amount = Double.parseDouble(amountField.getText());
+                account.withdraw(amount);
+                balanceLabel.setText("Balance: " + String.valueOf(account.getBalance()));
+                withdraw.setVisible(false);
+                withdraw.dispose();
+            }
+        });
+    }
+
+    public static void displayDeposit(JFrame frame, JLabel balanceLabel, Account account){
+        JDialog deposit = new JDialog(frame,"Enter deposit amount");
+        deposit.setSize(300,150);
+        JButton confirmButton = new JButton("Confirm");
+        JLabel actionLabel = new JLabel("Enter Amount:");
+        JTextField amountField = new JTextField(20);
+
+        deposit.add(actionLabel, BorderLayout.NORTH);
+        deposit.add(amountField, BorderLayout.CENTER);
+        deposit.add(confirmButton, BorderLayout.SOUTH);
+
+        deposit.setVisible(true);
+        confirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double amount = Double.parseDouble(amountField.getText());
+                account.deposit(amount);
+                balanceLabel.setText("Balance: "+String.valueOf(account.getBalance()));
+                deposit.setVisible(false);
+                deposit.dispose();
+            }
+        });
+
     }
 
     /*

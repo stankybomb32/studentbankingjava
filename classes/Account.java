@@ -13,6 +13,7 @@ public class Account {
         this.name = name;
         this.passHash = password; // Replace with Hashing later
         this.balance = balance;
+        tranHis = new LinkedList<TransactionEvent>();
     }
 
     public void setName(String name) {
