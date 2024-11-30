@@ -98,6 +98,13 @@ public class GUI {
             }
         });
 
+        transferButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayTransferWindow(frame, balanceLabel,account);
+            }
+        });
+
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -168,11 +175,58 @@ public class GUI {
 
     }
 
-    /*
-    void static CashApp displayTransferWindow(Account account){
-        String mobileNo;
-        String name;
+    public static CashApp displayTransferWindow(JFrame frame, JLabel balanceLabel, Account account){
+        JDialog transfer = new JDialog(frame,"Transfer Window");
+        transfer.setSize(700,150);
+        JPanel fieldPanel = new JPanel(new FlowLayout());
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        JButton bkashButton = new JButton("Bkash");
+        JButton nagadButton = new JButton("Nagad");
+        JLabel mobileLabel = new JLabel("Enter Mobile No:");
+        JTextField mobileText = new JTextField(20);
+        JLabel actionLabel = new JLabel("Enter Amount:");
+        JTextField amountField = new JTextField(20);
+
+        fieldPanel.add(mobileLabel);
+        fieldPanel.add(mobileText);
+        fieldPanel.add(actionLabel);
+        fieldPanel.add(amountField);
+        buttonPanel.add(bkashButton);
+        buttonPanel.add(nagadButton);
+        transfer.add(fieldPanel, BorderLayout.NORTH);
+        transfer.add(buttonPanel, BorderLayout.SOUTH);
+
+        transfer.setVisible(true);
+
+        final CashApp[] cashAppHolder = {null};
+
+        bkashButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String mobileNo = mobileText.getText();
+                double amount = Double.parseDouble(amountField.getText());
+                cashAppHolder[0] = new Bkash(mobileNo);
+                cashAppHolder[0].transferIn(amount);
+                account.transferOut("Bkash",amount);
+                balanceLabel.setText("Balance: "+String.valueOf(account.getBalance()));
+                transfer.dispose();
+
+            }
+        });
+
+        nagadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //To be added later
+                transfer.dispose();
+            }
+        });
+
+        return cashAppHolder[0];
+
+
+
     }
-     */
+
 
 }
