@@ -17,11 +17,22 @@ public class GUI {
         throw new NullPointerException();
 
     }
+
+    public static void signup(ArrayList<Account> accounts, String name, String pass) throws Exception{
+        for (Account account: accounts){
+            if((account.getName()).equals(name)){
+                throw new Exception();
+            }
+        }
+        String passHash = pass; //Replace with hashing
+        accounts.add(new Account(name, passHash, 0));
+    }
     public static void displayLogin(ArrayList<Account> accounts){
         JFrame frame = new JFrame("Login Screen");
         JPanel panel = new JPanel(new FlowLayout());
         JPanel buttonPanel = new JPanel(new FlowLayout());
         JButton loginButton = new JButton("Login");
+        JButton signupButton = new JButton("Sign Up");
         frame.setLayout(new BorderLayout());
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,6 +52,7 @@ public class GUI {
         panel.add(passField);
 
         buttonPanel.add(loginButton);
+        buttonPanel.add(signupButton);
 
         frame.setVisible(true);
 
@@ -61,6 +73,40 @@ public class GUI {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             warning.setVisible(false);  // Hides the dialog
+                        }
+                    });
+                    warning.add(closeButton);
+                    warning.setVisible(true);
+                }
+            }
+        });
+
+        signupButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    signup(accounts, userText.getText(), passField.getText());
+                    Dialog confirmation = new Dialog(frame,"Account Created!", false);
+                    confirmation.setSize(300,150);
+                    Button closeButton = new Button("Close");
+                    closeButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            confirmation.dispose();
+                        }
+                    });
+                    confirmation.add(closeButton);
+                    confirmation.setVisible(true);
+
+                }
+                catch(Exception e1){
+                    Dialog warning = new Dialog(frame,"Account already exists!", false);
+                    warning.setSize(300,150);
+                    Button closeButton = new Button("Close");
+                    closeButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            warning.dispose();
                         }
                     });
                     warning.add(closeButton);
