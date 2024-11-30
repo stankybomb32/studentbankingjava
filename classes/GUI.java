@@ -217,7 +217,12 @@ public class GUI {
         nagadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //To be added later
+                String mobileNo = mobileText.getText();
+                double amount = Double.parseDouble(amountField.getText());
+                cashAppHolder[0] = new Nagad(mobileNo);
+                cashAppHolder[0].transferIn(amount);
+                account.transferOut("Nagad",amount);
+                balanceLabel.setText("Balance: "+String.valueOf(account.getBalance()));
                 transfer.dispose();
             }
         });
