@@ -105,6 +105,13 @@ public class GUI {
             }
         });
 
+        tranHisButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayTranHis(frame, account);
+            }
+        });
+
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -230,6 +237,37 @@ public class GUI {
         return cashAppHolder[0];
 
 
+
+    }
+
+    public static void displayTranHis(JFrame frame, Account account){
+        JDialog tranHisDialog = new JDialog(frame, account.getName()+"'s Transaction History");
+        JTextArea infoField = new JTextArea();
+        JScrollPane scrollPane = new JScrollPane(infoField);
+        JButton exitButton = new JButton("Exit");
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+
+        StringBuilder content = new StringBuilder();
+        for(TransactionEvent i: account.getTranHis()){
+            content.append(i.getAmount()+"\t"+i.getType()+"\t"+i.getPlatform()).append("\n");
+        }
+        infoField.setText(content.toString());
+
+        tranHisDialog.setSize(300,500);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        buttonPanel.add(exitButton);
+        tranHisDialog.add(infoField, BorderLayout.CENTER);
+        tranHisDialog.add(buttonPanel, BorderLayout.SOUTH);
+
+
+        tranHisDialog.setVisible(true);
+
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tranHisDialog.dispose();
+            }
+        });
 
     }
 

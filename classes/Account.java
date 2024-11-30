@@ -47,6 +47,10 @@ public class Account {
         tranHis.add(new TransactionEvent("transfer",amount,platform));
     }
 
+    public LinkedList<TransactionEvent> getTranHis() {
+        return tranHis;
+    }
+
     boolean checkPass(String pass){
         return true; // To be added later
     }
