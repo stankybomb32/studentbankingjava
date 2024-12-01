@@ -13,6 +13,7 @@ public class Account {
         this.name = name;
         this.passHash = password; // Replace with Hashing later
         this.balance = balance;
+        tranHis = new LinkedList<TransactionEvent>();
     }
 
     public void setName(String name) {
@@ -44,6 +45,10 @@ public class Account {
     void transferOut(String platform, double amount){
         this.balance -= amount;
         tranHis.add(new TransactionEvent("transfer",amount,platform));
+    }
+
+    public LinkedList<TransactionEvent> getTranHis() {
+        return tranHis;
     }
 
     boolean checkPass(String pass){
