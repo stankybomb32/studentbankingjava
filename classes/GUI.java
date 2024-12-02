@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class GUI {
@@ -62,7 +64,7 @@ public class GUI {
             public void actionPerformed(ActionEvent e) {
                 try{
                     Account account = GUI.login(accounts, userText.getText(), passField.getText());
-                    GUI.displayAccount(account);
+                    GUI.displayAccount(account, accounts);
                     frame.dispose(); //Logic to be added later
                 }
                 catch(Exception e1){
@@ -116,7 +118,7 @@ public class GUI {
         });
     }
 
-    public static void displayAccount(Account account){
+    public static void displayAccount(Account account, ArrayList<Account> accounts){
         JFrame frame = new JFrame(account.getName() + "'s Account");
         frame.setLayout(new BorderLayout());
         JPanel infoPanel = new JPanel(new FlowLayout());
@@ -161,11 +163,18 @@ public class GUI {
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                FileHandling.write(accounts);
                 frame.dispose();
             }
         });
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                FileHandling.write(accounts); // Save accounts before closing
+            }
+        });
         frame.add(infoPanel, BorderLayout.NORTH);
         frame.add(buttonPanel, BorderLayout.CENTER);
         infoPanel.add(balanceLabel);

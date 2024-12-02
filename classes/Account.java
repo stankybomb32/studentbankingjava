@@ -1,9 +1,10 @@
 package classes;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class Account {
+public class Account implements Serializable {
     private String name;
     private String passHash;
     private double balance;
