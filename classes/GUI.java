@@ -129,6 +129,7 @@ public class GUI {
         JButton withdrawButton = new JButton("Withdraw");
         JButton transferButton = new JButton("Transfer");
         JButton tranHisButton = new JButton("View Transaction History");
+        JButton finAdviceButton = new JButton("Financial Advice");
         JButton logoutButton = new JButton("Log Out");
 
         depositButton.addActionListener(new ActionListener() {
@@ -160,6 +161,13 @@ public class GUI {
             }
         });
 
+        finAdviceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayInc(frame, account);
+            }
+        });
+
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -182,6 +190,7 @@ public class GUI {
         buttonPanel.add(withdrawButton);
         buttonPanel.add(transferButton);
         buttonPanel.add(tranHisButton);
+        buttonPanel.add(finAdviceButton);
         buttonPanel.add(logoutButton);
         frame.setSize(350,400);
 
@@ -209,6 +218,7 @@ public class GUI {
                 withdraw.setVisible(false);
                 withdraw.dispose();
             }
+
         });
     }
 
@@ -290,6 +300,64 @@ public class GUI {
         });
 
         return cashAppHolder[0];
+
+
+
+    }
+
+    public static void displayInc(JFrame frame, Account account){
+        JDialog incDialog = new JDialog(frame, "Enter monthly income:");
+        incDialog.setSize(700,150);
+        JButton confirmButton = new JButton("Confirm");
+        JLabel actionLabel = new JLabel("Enter Amount:");
+        JTextField amountField = new JTextField(20);
+
+        incDialog.add(actionLabel, BorderLayout.NORTH);
+        incDialog.add(amountField, BorderLayout.CENTER);
+        incDialog.add(confirmButton, BorderLayout.SOUTH);
+
+        incDialog.setVisible(true);
+
+        confirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                double monthlyIncome = Double.parseDouble(amountField.getText());
+                displayFinAdvice(frame, account, monthlyIncome);
+                incDialog.dispose();
+            }
+        });
+    }
+
+    public static void displayFinAdvice(JFrame frame, Account account, double monthlyIncome){
+
+        JDialog FinDialog = new JDialog(frame, account.getName()+"s Financial Advice");
+        JTextArea AdviceField = new JTextArea();
+        JScrollPane scrollPane = new JScrollPane(AdviceField);
+        JButton exitButton = new JButton("Exit");
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+
+        StringBuilder advice = new StringBuilder();
+        advice.append(FinancialAdvisor.giveSavingAdvice(account)+"\n");
+        advice.append(FinancialAdvisor.suggestSavingPlan(monthlyIncome, account)+"\n");
+        advice.append(FinancialAdvisor.actionableSavingTips()+"\n");
+
+        AdviceField.setText(advice.toString());
+
+        FinDialog.setSize(300,500);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        buttonPanel.add(exitButton);
+        FinDialog.add(AdviceField, BorderLayout.CENTER);
+        FinDialog.add(buttonPanel, BorderLayout.SOUTH);
+
+
+        FinDialog.setVisible(true);
+
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FinDialog.dispose();
+            }
+        });
 
 
 

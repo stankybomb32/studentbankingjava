@@ -1,3 +1,4 @@
+package classes;
 import java.util.List;
 
 public class FinancialAdvisor {
@@ -34,7 +35,7 @@ public class FinancialAdvisor {
                "5. Set specific financial goals to stay motivated.";
     }
 
-    // Main method for testing
+    /*
     public static void main(String[] args) {
         // Example Account
         Account testAccount = new Account("user123", "password", 2000);
@@ -46,6 +47,6 @@ public class FinancialAdvisor {
         System.out.println(giveSavingAdvice(testAccount));
         System.out.println(suggestSavingPlan(10000, testAccount));
         System.out.println(actionableSavingTips());
-    }
+    }*/
 }
 
