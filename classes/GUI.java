@@ -342,6 +342,8 @@ public class GUI {
         advice.append(FinancialAdvisor.actionableSavingTips()+"\n");
 
         AdviceField.setText(advice.toString());
+        AdviceField.setLineWrap(true);
+        AdviceField.setWrapStyleWord(true);
 
         FinDialog.setSize(300,500);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);

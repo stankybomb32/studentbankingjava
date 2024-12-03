@@ -52,8 +52,16 @@ public class Account implements Serializable {
     }
 
     void transferOut(String platform, double amount){
-        this.balance -= amount;
-        tranHis.add(new TransactionEvent("transfer",amount,platform));
+        try{
+            if(balance - amount < 0){
+                throw new Exception("Balance can't be less than zero.");
+            }
+            this.balance -= amount;
+            tranHis.add(new TransactionEvent("transfer",amount,platform));
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     public LinkedList<TransactionEvent> getTranHis() {

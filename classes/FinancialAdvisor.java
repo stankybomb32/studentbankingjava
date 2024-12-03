@@ -35,18 +35,6 @@ public class FinancialAdvisor {
                "5. Set specific financial goals to stay motivated.";
     }
 
-    /*
-    public static void main(String[] args) {
-        // Example Account
-        Account testAccount = new Account("user123", "password", 2000);
-        testAccount.deposit(5000);
-        testAccount.withdraw(1500);
-        testAccount.withdraw(800);
 
-        // Display saving-focused advice
-        System.out.println(giveSavingAdvice(testAccount));
-        System.out.println(suggestSavingPlan(10000, testAccount));
-        System.out.println(actionableSavingTips());
-    }*/
 }
 
