@@ -39,8 +39,16 @@ public class Account implements Serializable {
     }
 
     void withdraw(double amount){
-        this.balance -= amount;
-        tranHis.add(new TransactionEvent("withdraw",amount,"bank"));
+        try{
+            if(balance - amount < 0){
+                throw new Exception("Balance can't be less than zero");
+            }
+            this.balance -= amount;
+            tranHis.add(new TransactionEvent("withdraw",amount,"bank"));
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
     }
 
     void transferOut(String platform, double amount){
