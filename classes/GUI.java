@@ -12,7 +12,7 @@ public class GUI {
 
     public static Account login(ArrayList<Account> accounts,String name, String pass) throws NullPointerException{
         for (Account account: accounts){
-            if((account.getName()).equals(name) && account.checkPass(pass)){ //Replace with hashing
+            if((account.getName()).equals(name) && account.checkPass(pass)){
                 return account;
             }
         }
@@ -26,8 +26,7 @@ public class GUI {
                 throw new Exception();
             }
         }
-        String passHash = pass; //Replace with hashing
-        accounts.add(new Account(name, passHash, 0));
+        accounts.add(new Account(name, pass, 0));
     }
     public static void displayLogin(ArrayList<Account> accounts){
         JFrame frame = new JFrame("Login Screen");

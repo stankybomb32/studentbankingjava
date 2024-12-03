@@ -12,7 +12,7 @@ public class Account implements Serializable {
 
     Account(String name, String password, double balance ){
         this.name = name;
-        this.passHash = password; // Replace with Hashing later
+        this.passHash = PasswordHashing.hashPassword(password);
         this.balance = balance;
         tranHis = new LinkedList<TransactionEvent>();
     }
@@ -26,7 +26,7 @@ public class Account implements Serializable {
     }
 
     public void setPass(String pass) {
-        this.passHash = pass; //Replace with hashing later
+        this.passHash = PasswordHashing.hashPassword(pass);
     }
 
     public double getBalance() {
@@ -69,7 +69,7 @@ public class Account implements Serializable {
     }
 
     boolean checkPass(String pass){
-        return true; // To be added later
+        return (PasswordHashing.hashPassword(pass)).equals(passHash);
     }
 
 }
